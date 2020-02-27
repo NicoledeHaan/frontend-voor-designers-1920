@@ -1,16 +1,71 @@
 html{
   box-sizing: border-box; /* https://css-tricks.com/box-sizing/ */
   background:#eee;
-  background: url("../img/flagF4D.png") center no-repeat;
 }
 *, *:before, *:after {
   box-sizing: inherit;
+  justify-content: space-between;
 }
-body{
-  max-width: 30em;
-  margin: 1em auto;
-  padding: 1em;
-  background: #fff;
-  border-radius: 1em;
-  box-shadow: 0.5em 0.5em 0.5em rgba(68,68,68,0.6);
+
+body > header {
+    display: flex;
+    align-items: center;
+}
+
+body > header ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+body > header ul a{
+    display: block;
+    padding: 1em;
+    background-color: grey;
+}
+
+body > header svg {
+    fill: red;
+}
+
+main > ul li {
+    list-style: none;
+    font-size: 0.5em;
+    position: relative;
+}
+
+img {
+    width: 20em;
+    height: 15em;
+}
+
+main ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 1em;
+    padding: 0px;
+    margin: 0px;
+}
+
+main > ul li{
+    list-style: none;
+    font-size: 0.5em;
+    position: relative;
+}
+
+main ul li img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+main ul li button{
+    position: absolute;
+    right: 0;
+    bottom: 0
+}
+
+.favo2{
+    fill: red;
 }
