@@ -3,7 +3,8 @@
 }
 
 body {
-    margin:0; padding:1em;  
+    margin:0; padding:1em;
+    color: red;
 }
 
 .carousel{
@@ -100,4 +101,9 @@ button.pijltje.volgende{
 button.pijltje:hover{
     box-shadow:0 0 .25em .25em #0088ff;
     transform: scale(1.1);
+}
+
+/* hover foto */
+img:hover{
+    opacity: 0.3;
 }

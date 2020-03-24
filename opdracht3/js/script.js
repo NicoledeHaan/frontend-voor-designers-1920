@@ -32,14 +32,29 @@ request.onload = function() {
         let newHeader = document.createElement("h2");
         let newLi = document.createElement("li");
             newLi.setAttribute("id", "afb" + (i + 1));
+        let releasDate = document.createElement("p");
+        let sPlot = document.createElement("p");
+        let genre = document.createElement("p");
+
+        //        let newBtn = document.createElement("button");
+//        newBtn.innerHTML=("meer informatie");
+//        newBtn.setAttribute("id","btn");
+             
         
         newImg.src = movies[i].cover;
         newImg.setAttribute("alt", movies[i].title);
         newHeader.innerHTML = movies[i].title;
-        
+        releasDate.textContent = 'Release Date: ' + movies[i].release_date
+        sPlot.textContent= movies[i].simple_plot
+        genre.textContent= 'Genre: ' +movies[i].genres
+
         newLi.appendChild(newHeader);
         newLi.appendChild(newImg);
+        newLi.appendChild(releasDate);
+        newLi.appendChild(sPlot);
+        newLi.appendChild(genre);
         document.body.querySelector("ul").appendChild(newLi);
+
         
          for (let t = 0; t < movies[i].reviews.length; t++) {
             console.log(movies[i].reviews[t].score);
@@ -47,8 +62,11 @@ request.onload = function() {
             newFavoriet.innerHTML = movies[i].reviews[t].score;
             document.body.querySelector("main").appendChild(newFavoriet);
         }
-    }  
+        
+    }
+    
 }
+
 
 var bolletje1 = document.querySelector("a[href='#afb1']");
 var bolletje2 = document.querySelector("a[href='#afb2']");
