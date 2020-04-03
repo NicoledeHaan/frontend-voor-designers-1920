@@ -9,118 +9,123 @@
 /*eslint-env browser*/
 /*eslint 'no-console':0*/
 
-const header = document.querySelector('header');
-const section = document.querySelector('section');
-
-let requestURL = 'https://koopreynders.github.io/frontendvoordesigners/opdracht3/json/movies.json'; 
-
+let requestURL = 'https://koopreynders.github.io/frontendvoordesigners/opdracht3/json/movies.json';
 let request = new XMLHttpRequest();
-
 request.open('GET', requestURL);
-
 request.responseType = 'json';
 request.send();
 
-request.onload = function() {
-  const movies = request.response;
-//  populateHeader(movies);
-//  showHeroes(movies);
-//    console.log(movies);
-    
-    for (let i = 0; i < movies.length; i++) {
-        let newImg = document.createElement("img");
-        let newHeader = document.createElement("h2");
-        let newLi = document.createElement("li");
-            newLi.setAttribute("id", "afb" + (i + 1));
-        let releasDate = document.createElement("p");
-        let sPlot = document.createElement("p");
-        let genre = document.createElement("p");
 
-        //        let newBtn = document.createElement("button");
-//        newBtn.innerHTML=("meer informatie");
-//        newBtn.setAttribute("id","btn");
-             
-        
-        newImg.src = movies[i].cover;
-        newImg.setAttribute("alt", movies[i].title);
-        newHeader.innerHTML = movies[i].title;
-        releasDate.textContent = 'Release Date: ' + movies[i].release_date
-        sPlot.textContent= movies[i].simple_plot
-        genre.textContent= 'Genre: ' +movies[i].genres
-
-        newLi.appendChild(newHeader);
-        newLi.appendChild(newImg);
-        newLi.appendChild(releasDate);
-        newLi.appendChild(sPlot);
-        newLi.appendChild(genre);
-        document.body.querySelector("ul").appendChild(newLi);
-
-        
-         for (let t = 0; t < movies[i].reviews.length; t++) {
-            console.log(movies[i].reviews[t].score);
-            let newFavoriet = document.createElement("span");
-            newFavoriet.innerHTML = movies[i].reviews[t].score;
-            document.body.querySelector("main").appendChild(newFavoriet);
-        }
-        
-    }
-    
+/* dit doen als er info van de api terugkomt */
+request.onload = function () {
+	const movies = request.response;
+	voegFilmsToe(movies);
 }
 
 
-var bolletje1 = document.querySelector("a[href='#afb1']");
-var bolletje2 = document.querySelector("a[href='#afb2']");
-var bolletje3 = document.querySelector("a[href='#afb3']");
-var bolletje4 = document.querySelector("a[href='#afb4']");
-var bolletje5 = document.querySelector("a[href='#afb5']");
+/* films toevoegen aan de lijst */
+function voegFilmsToe(movies) {
+	let deLijstMetFilms = document.body.querySelector("ul");
+	let deLijstMetBolletjes = document.body.querySelector(".bolletjes");
 
-function bolletjeklik(event){
-    document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
-    event.target.classList.add('bolletjegevuld2');
+	for (let i = 0; i < movies.length; i++) {
+		/* de film aanmaken en toevoegen aan de lijst */
+		let newLi = document.createElement("li");
+		let newHeader = document.createElement("h2");
+		let newImg = document.createElement("img");
+		
+		let newDetails = document.createElement("div");
+		/*ik van de datum zelf een <date> element gemaakt */
+		let releaseText = document.createElement("p");
+		let releaseDate = document.createElement("date");
+		let Plot = document.createElement("p");
+		let genre = document.createElement("p");
+
+		newLi.setAttribute("id", "afb" + (i + 1));
+        newDetails.setAttribute("id","detail");
+		newImg.src = movies[i].cover;
+		newImg.setAttribute("alt", movies[i].title);
+		newHeader.innerHTML = movies[i].title;
+		
+		releaseDate.innerHTML = movies[i].release_date;
+		releaseText.innerHTML = 'Release Date: ';
+		releaseText.appendChild(releaseDate);
+		Plot.innerHTML = 'Plot: ' + movies[i].plot;
+		genre.innerHTML = 'Genre: ' + movies[i].genres;
+        
+		
+		/* de details stop ik met zijn allen in een div */
+		newDetails.appendChild(releaseText);
+		newDetails.appendChild(Plot);
+		newDetails.appendChild(genre);
+        
+        for (let t = 0; t < movies[i].reviews.length; t++) {
+                let review = document.createElement("p");
+                review.innerHTML = 'Review:' + movies[i].reviews[t].score;
+                newDetails.appendChild(review);
+            }
+		
+		newLi.appendChild(newHeader);
+		newLi.appendChild(newImg);
+		/* de div met details stop ik in zijn geheel in de li */
+		/* dan kunnen de detail met zijn allen met css aangepast worden */
+		newLi.appendChild(newDetails);
+		
+		deLijstMetFilms.appendChild(newLi);
+		
+		/* bolletje voor de film aanmaken en toevoegen aan de lijst met bolletjes */
+		let newBolletje = document.createElement("a");
+		newBolletje.setAttribute("href", "#afb" + (i + 1));
+		newBolletje.addEventListener('click', bolletjeklik);
+		deLijstMetBolletjes.appendChild(newBolletje);
+	}
+	
+	/* en dan het eerste bolletje nog zwart maken */
+	let eersteBolletje = deLijstMetBolletjes.querySelector(":first-child");
+	eersteBolletje.classList.add("bolletjegevuld2");
 }
 
-bolletje1.addEventListener('click', bolletjeklik);
-bolletje2.addEventListener('click', bolletjeklik);
-bolletje3.addEventListener('click', bolletjeklik);
-bolletje4.addEventListener('click', bolletjeklik);
-bolletje5.addEventListener('click', bolletjeklik);
+
+/* klikken op bolletje afhandelen */
+function bolletjeklik(event) {
+	document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
+	event.target.classList.add('bolletjegevuld2');
+}
 
 
-
+/* klikken op buttons afhandelen */
 var buttonLinks = document.querySelector(".pijltje.volgende");
 var buttonRechts = document.querySelector(".pijltje.vorige");
 
+function buttongeklikt(event) {
+	var huidigebolletje;
+	var nieuwebolletje;
 
-function buttongeklikt(event){
-    var huidigebolletje; 
-    var nieuwebolletje;
-    
-    if (event.target.classList.contains("volgende") ){ 
-        huidigebolletje = document.querySelector("a.bolletjegevuld2");
-        nieuwebolletje = huidigebolletje.nextElementSibling;
-        
-        if(nieuwebolletje === null){
-            nieuwebolletje = document.querySelector("a:first-of-type");
-        }
-        
-        window.location = nieuwebolletje.href;
-        document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
-        nieuwebolletje.classList.add('bolletjegevuld2');
-        
-    } else {
-        huidigebolletje = document.querySelector("a.bolletjegevuld2");
-        nieuwebolletje = huidigebolletje.previousElementSibling;
-        
-        if(nieuwebolletje === null){
-            nieuwebolletje = document.querySelector("a:last-of-type");
-        }
-        
-        window.location = nieuwebolletje.href;
-        document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
-        nieuwebolletje.classList.add('bolletjegevuld2');
-    }
+	if (event.target.classList.contains("volgende")) {
+		huidigebolletje = document.querySelector("a.bolletjegevuld2");
+		nieuwebolletje = huidigebolletje.nextElementSibling;
+
+		if (nieuwebolletje === null) {
+			nieuwebolletje = document.querySelector("a:first-of-type");
+		}
+
+		window.location = nieuwebolletje.href;
+		document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
+		nieuwebolletje.classList.add('bolletjegevuld2');
+
+	} else {
+		huidigebolletje = document.querySelector("a.bolletjegevuld2");
+		nieuwebolletje = huidigebolletje.previousElementSibling;
+
+		if (nieuwebolletje === null) {
+			nieuwebolletje = document.querySelector("a:last-of-type");
+		}
+
+		window.location = nieuwebolletje.href;
+		document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
+		nieuwebolletje.classList.add('bolletjegevuld2');
+	}
 }
-
 
 buttonLinks.addEventListener('click', buttongeklikt);
 buttonRechts.addEventListener('click', buttongeklikt);

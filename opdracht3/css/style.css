@@ -1,109 +1,160 @@
-*{
-    box-sizing: border-box;
+* {
+	box-sizing: border-box;
+	color: white;
 }
 
 body {
-    margin:0; padding:1em;
-    color: red;
+	margin: 0;
+	padding: 1em;
 }
 
-.carousel{
-    position: relative;
+button{
+    color:black;
 }
 
-.carousel > ul{
-    display: flex;
-    margin:0; padding:0;
-    list-style: none;
-    width:100%;
-    overflow: scroll;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    background-color:black;
+/**************************/
+/* de carrousel container */
+/**************************/
+.carousel {
+	position: relative;
 }
 
-.carousel > ul > li{
-    box-sizing: content-box;
-    flex-shrink:0;
-    width:calc(100% - 4em);
-    padding: 0 .5em;
-    scroll-snap-align: center;
+
+/**********************/
+/* de lijst met films */
+/**********************/
+.carousel > ul {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 100%;
+	overflow: scroll;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	background-color: black;
+}
+
+
+/************/
+/* een film */
+/************/
+.carousel > ul > li {
+	position:relative;
+	box-sizing: content-box;
+	flex-shrink: 0;
+	width: calc(100% - 4em);
+	padding: 0 .5em;
+	scroll-snap-align: center;
+	background:black;
 }
 
 .carousel > ul > li:first-of-type {
-    padding-left:2em;
+	padding-left: 2em;
 }
+
 .carousel > ul > li:last-of-type {
-    padding-right:2em;
+	padding-right: 2em;
 }
 
-img{
-    display:block;
-    width:100%;
-    height: 40em;
+/* de afbeelding */
+img {
+	display: block;
+	width:100%;
+	height:40em;
 }
 
+/* de details */
+#detail{
+	position:absolute;
+	width:100%; 
+    height:100%;
+	top:0; left:0;
+	padding:inherit;
+	background:#1A606060;
+	background-clip: content-box;
+	
+	/* de details zijn standaard doorzichtig */
+	opacity:0;
+	transition:.5s;
+}
 
+/* hover over film (li) */
+div#detail:hover{
+	/* de details worden zichbaar als er over de film gehoverd wordt */
+	opacity:4;
+    text-align: center;
+}
+
+p{
+    padding-left: 50;
+    padding-right: 50;
+    padding-top: 30;
+}
+
+/*************/
 /* bolletjes */
-div.bolletjes{
-    display:flex;
-    justify-content:center;
- 
+/*************/
+div.bolletjes {
+	display: flex;
+	justify-content: center;
 }
 
-div.bolletjes a{
-    display: block;
-    width: 1em; height: 1em;
-    margin:.5em .25em;
-    border: 1px solid black;
-    border-radius: 50%;
-    overflow: hidden;
-    padding-left: 1em;
-    color: green;
+div.bolletjes a {
+	display: block;
+	width: 1em;
+	height: 1em;
+	margin: .5em .25em;
+	border: 1px solid black;
+	border-radius: 50%;
+	outline:none;
+	overflow: hidden;
+	padding-left: 1em;
+	color: green;
 }
 
-div.bolletjes a:hover{
-    outline:none;
-    box-shadow:0 0 .25em .25em #0088ff;
-    transform: scale(1.1);
+/* focus toegevoegd */
+div.bolletjes a:hover,
+div.bolletjes a:focus{
+	outline: none;
+	box-shadow: 0 0 .25em .25em #0088ff;
+	transform: scale(1.1);
 }
 
-div.bolletjes a.bolletjegevuld2{
-    background-color: black;
+div.bolletjes a.bolletjegevuld2 {
+	background-color: black;
 }
 
+
+/************/
 /* pijltjes */
-button.pijltje{
-    position: absolute;
-    
-    width: 40px;
-    height: 80px;
-    
-    line-height: 40px;
-    padding:0;
-    border:0;
-    font-size:1em;
-    background:white;
-    top: calc(15em - 20px);
-    outline:none;
+/************/
+button.pijltje {
+	position: absolute;
+	width: 40px;
+	height: 80px;
+	line-height: 40px;
+	padding: 0;
+	border: 0;
+	font-size: 1em;
+	background: white;
+	top: calc(50% - 56px);
+	outline: none;
 }
 
-button.pijltje.vorige{
-    left: 0em;
-    border-radius:0 40px 40px 0;
+button.pijltje.vorige {
+	left: 0em;
+	border-radius: 0 40px 40px 0;
 }
 
-button.pijltje.volgende{
-    right: 0em;
-    border-radius:40px 0 0 40px;
+button.pijltje.volgende {
+	right: 0em;
+	border-radius: 40px 0 0 40px;
 }
 
-button.pijltje:hover{
-    box-shadow:0 0 .25em .25em #0088ff;
-    transform: scale(1.1);
-}
-
-/* hover foto */
-img:hover{
-    opacity: 0.3;
+/* focus toegevoegd */
+button.pijltje:hover,
+button.pijltje:focus{
+	box-shadow: 0 0 .25em .25em #0088ff;
+	transform: scale(1.1);
 }
