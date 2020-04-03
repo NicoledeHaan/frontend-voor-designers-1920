@@ -27,3 +27,12 @@ De film + titel stonden nu naast elkaar, maar ik wilde dit onder elkaar hebben. 
 
 Als laatste heb ik de tekstkleur rood weer verandert naar wit. Ik wilde inplaats van de simple plot de uitgebreide plot, dit heb ik weer uit de externe bron gehaald. Vervolgens heb ik de hover kleur verandert naar een lichtere kleur die beter bij de foto's past. Ik ben enorm blij met het eindresultaat. Vooral omdat ik grotendeels zelf heb gedaan wat ik niet dacht dat mij zou lukken, zoals alle data heb ik zelf opgehaald uit de externe bron. Ik dacht dat deze opdracht mij veel moeizamer zal verlopen, het koste mij veel tijd maar ik kwam er wel zelf uit daar ben ik erg blij mee. Ik zat er in het begin erg tegenop omdat ik niet zo goed begreep hoe dit allemaal nou werkte en omdat het met meeer Javascript is. Uiteindelijk is het me gelukt en daar ben ik super blij mee en stiekem een beetje trots op ;). Bekijk hieronder de laatste versie van mijn site:
 <img width="778" alt="Schermafbeelding 2020-04-02 om 22 03 36" src="https://user-images.githubusercontent.com/58775312/78369612-c1e15a80-75c5-11ea-936e-f94ba1443f42.png">
+
+Verder werkt de site met meerder UIEvents, namelijk met je tab en de pijltjes.
+Ik heb meerdere principles gebruikt:
+- 4 Keep users in control: Door de bolletjes weet de gebruiker hoeveel foto's er zijn en waar hij/zij nu is. Verder zie je tijdens het tabben door de foto's waar je nu bent. 
+- 6 One primary action per screen: de hoofdactie is met de pijltjes door de foto's heengaan (het kan ook met de bolletjes, maar dat is een extra).
+- 8 Provide a natural next step: De gebruiker kan constant door de foto's heen gaan, hij/zij zal direct begrijpen hoe het werkt door de pijljtes.
+- 9 Appearance follows behavior: De pijltjes zien er uit als buttons dus gebruikers zullen verwachten dat zij erop moeten klikken en het dan naar de volgende foto gaat (zij herkennen dit ook van andere dingen) en het heeft ook de werking van een button. 
+- 10 Consistency matters: alles is consistent, alles werkt op dezelfde manier en ziet er hetzelfde uit.
+- 11 Strong visual hierachy work best: de hierarchie is goed, wit op zwart is altijd goed leesbaar. 
