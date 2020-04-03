@@ -29,6 +29,7 @@ Als laatste heb ik de tekstkleur rood weer verandert naar wit. Ik wilde inplaats
 <img width="778" alt="Schermafbeelding 2020-04-02 om 22 03 36" src="https://user-images.githubusercontent.com/58775312/78369612-c1e15a80-75c5-11ea-936e-f94ba1443f42.png">
 
 Verder werkt de site met meerder UIEvents, namelijk met je tab en de pijltjes.
+
 Ik heb meerdere principles gebruikt:
 - 4 Keep users in control: Door de bolletjes weet de gebruiker hoeveel foto's er zijn en waar hij/zij nu is. Verder zie je tijdens het tabben door de foto's waar je nu bent. 
 - 6 One primary action per screen: de hoofdactie is met de pijltjes door de foto's heengaan (het kan ook met de bolletjes, maar dat is een extra).
