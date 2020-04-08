@@ -120,6 +120,7 @@ function buttongeklikt(event) {
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event
 document.addEventListener("keydown", event => {
+     event.preventDefault();
 	// Pijltje naar rechts -> volgende film
   if (event.isComposing || event.keyCode === 39) {
     nextMovie();
