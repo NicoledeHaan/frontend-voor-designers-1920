@@ -1,5 +1,6 @@
-Hierbij de link naar mijn site: http://127.0.0.1:59273/index.html
-https://nicoledehaan.github.io/frontend-voor-designers-1920/opdracht3/
+Hierbij de link naar mijn live site: http://127.0.0.1:59273/index.html
+
+Hierbij de link naar mijn site: https://nicoledehaan.github.io/frontend-voor-designers-1920/opdracht3/
 
 # frontend voor designers - opdracht 3: Een interactie uitwerken met externe data
 
