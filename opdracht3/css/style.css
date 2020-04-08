@@ -6,6 +6,7 @@
 body {
 	margin: 0;
 	padding: 1em;
+	background:black;
 }
 
 button{
@@ -17,22 +18,31 @@ button{
 /**************************/
 .carousel {
 	position: relative;
+	overflow: hidden;
 }
-
 
 /**********************/
 /* de lijst met films */
 /**********************/
 .carousel > ul {
-	display: flex;
-	margin: 0;
-	padding: 0;
-	list-style: none;
 	width: 100%;
+	height:calc(60vw);
+	margin: 0;
+	padding: 0 0 5vw;
+	
+	list-style: none;
+	background-color:#333;
+	
+	display: flex;
+	align-items:center;
 	overflow: scroll;
 	scroll-snap-type: x mandatory;
 	scroll-behavior: smooth;
-	background-color: black;
+}
+
+/* hide the scrollbars */
+.carousel > ul::-webkit-scrollbar {
+	width: 0 !important; height: 0 !important;
 }
 
 
@@ -43,59 +53,85 @@ button{
 	position:relative;
 	box-sizing: content-box;
 	flex-shrink: 0;
-	width: calc(100% - 4em);
-	padding: 0 .5em;
+	padding: 0 2vw;
 	scroll-snap-align: center;
-	background:black;
+	background-clip: content-box;
+	
+	/* de niet actieve films zijn deels transparant */
+	opacity:.5;
+	
+	/* de transitie tussen normaal en actief*/
+	transition:.5s;
 }
 
-.carousel > ul > li:first-of-type {
-	padding-left: 2em;
+/* de film in het midden is de actieve film */
+/* met JS krijgt deze film de class actief */
+/* de film is niet transparant en is groter */
+.carousel > ul > li.actief {
+	opacity:1;
+	transform:scale(1.25);
+	z-index:3;
 }
 
-.carousel > ul > li:last-of-type {
-	padding-right: 2em;
+/* de eerste film wordt vanaf de linkerrand groter - anders steekt de film uit */
+.carousel > ul > li.actief:first-of-type {
+	transform-origin: left center;
 }
+/* de laatste film wordt vanaf de rechterrand groter - anders steekt de film uit */
+.carousel > ul > li.actief:last-of-type {
+	transform-origin: right center;
+}
+
+
+/* de titel */
+h2 {
+	margin:0;
+	font-size:2.5vw;
+	line-height:5vw;
+	text-align: center;
+}
+
 
 /* de afbeelding */
 img {
 	display: block;
-	width:100%;
-	height:40em;
+	width:60vw;
+	height:35vw;
 }
+
 
 /* de details */
 #detail{
 	position:absolute;
-	width:100%; 
-    height:100%;
-	top:0; left:0;
-	padding:inherit;
-	background:#1A606060;
-	background-clip: content-box;
+	left:2vw; right:2vw;
+	top:5vw; bottom:0;
+	overflow:scroll;
 	
-	/* de details zijn standaard doorzichtig */
+	text-align: center;
+	background:#1A606060;
 	opacity:0;
 	transition:.5s;
 }
 
 /* hover over film (li) */
-div#detail:hover{
-	/* de details worden zichbaar als er over de film gehoverd wordt */
-	opacity:4;
-    text-align: center;
+/* alleen bij de actieve film */
+/* de details worden zichbaar als er over de film gehoverd wordt */
+li.actief div#detail:hover{
+	opacity:1;
 }
 
-p{
-    padding-left: 50;
-    padding-right: 50;
-    padding-top: 30;
+p {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
 }
 
 /*************/
 /* bolletjes */
 /*************/
 div.bolletjes {
+	position:absolute;
+	left:0; right:0; bottom:0;
 	display: flex;
 	justify-content: center;
 }
@@ -137,9 +173,11 @@ button.pijltje {
 	padding: 0;
 	border: 0;
 	font-size: 1em;
-	background: white;
+	background: black;
+	color:white;
 	top: calc(50% - 56px);
 	outline: none;
+	z-index:30;
 }
 
 button.pijltje.vorige {
@@ -156,5 +194,4 @@ button.pijltje.volgende {
 button.pijltje:hover,
 button.pijltje:focus{
 	box-shadow: 0 0 .25em .25em #0088ff;
-	transform: scale(1.1);
 }

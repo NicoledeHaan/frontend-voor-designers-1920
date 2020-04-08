@@ -33,7 +33,7 @@ function voegFilmsToe(movies) {
 		let newLi = document.createElement("li");
 		let newHeader = document.createElement("h2");
 		let newImg = document.createElement("img");
-		
+
 		let newDetails = document.createElement("div");
 		/*ik van de datum zelf een <date> element gemaakt */
 		let releaseText = document.createElement("p");
@@ -46,86 +46,128 @@ function voegFilmsToe(movies) {
 		newImg.src = movies[i].cover;
 		newImg.setAttribute("alt", movies[i].title);
 		newHeader.innerHTML = movies[i].title;
-		
+
 		releaseDate.innerHTML = movies[i].release_date;
 		releaseText.innerHTML = 'Release Date: ';
 		releaseText.appendChild(releaseDate);
 		Plot.innerHTML = 'Plot: ' + movies[i].plot;
 		genre.innerHTML = 'Genre: ' + movies[i].genres;
-        
-		
+
+
 		/* de details stop ik met zijn allen in een div */
 		newDetails.appendChild(releaseText);
 		newDetails.appendChild(Plot);
 		newDetails.appendChild(genre);
-        
+
         for (let t = 0; t < movies[i].reviews.length; t++) {
                 let review = document.createElement("p");
                 review.innerHTML = 'Review:' + movies[i].reviews[t].score;
                 newDetails.appendChild(review);
             }
-		
+
 		newLi.appendChild(newHeader);
 		newLi.appendChild(newImg);
 		/* de div met details stop ik in zijn geheel in de li */
 		/* dan kunnen de detail met zijn allen met css aangepast worden */
 		newLi.appendChild(newDetails);
-		
+
 		deLijstMetFilms.appendChild(newLi);
-		
+
 		/* bolletje voor de film aanmaken en toevoegen aan de lijst met bolletjes */
 		let newBolletje = document.createElement("a");
 		newBolletje.setAttribute("href", "#afb" + (i + 1));
 		newBolletje.addEventListener('click', bolletjeklik);
 		deLijstMetBolletjes.appendChild(newBolletje);
 	}
-	
+
 	/* en dan het eerste bolletje nog zwart maken */
 	let eersteBolletje = deLijstMetBolletjes.querySelector(":first-child");
 	eersteBolletje.classList.add("bolletjegevuld2");
+
+	/* en dan de eerste film actief maken */
+	/* met CSS wordt de film groter */
+	let eersteFilm = deLijstMetFilms.querySelector(":first-child");
+	eersteFilm.classList.add("actief");
 }
 
 
 /* klikken op bolletje afhandelen */
 function bolletjeklik(event) {
-	document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
-	event.target.classList.add('bolletjegevuld2');
+	/* navigeren naar het target even uitstellen */
+	event.preventDefault();
+
+	goToMovie(event.target);
 }
 
 
 /* klikken op buttons afhandelen */
 var buttonLinks = document.querySelector(".pijltje.volgende");
+buttonLinks.addEventListener('click', buttongeklikt);
+
 var buttonRechts = document.querySelector(".pijltje.vorige");
+buttonRechts.addEventListener('click', buttongeklikt);
+
 
 function buttongeklikt(event) {
-	var huidigebolletje;
-	var nieuwebolletje;
-
 	if (event.target.classList.contains("volgende")) {
-		huidigebolletje = document.querySelector("a.bolletjegevuld2");
-		nieuwebolletje = huidigebolletje.nextElementSibling;
+		nextMovie();
+	}
 
-		if (nieuwebolletje === null) {
-			nieuwebolletje = document.querySelector("a:first-of-type");
-		}
-
-		window.location = nieuwebolletje.href;
-		document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
-		nieuwebolletje.classList.add('bolletjegevuld2');
-
-	} else {
-		huidigebolletje = document.querySelector("a.bolletjegevuld2");
-		nieuwebolletje = huidigebolletje.previousElementSibling;
-
-		if (nieuwebolletje === null) {
-			nieuwebolletje = document.querySelector("a:last-of-type");
-		}
-
-		window.location = nieuwebolletje.href;
-		document.querySelector("a.bolletjegevuld2").classList.remove("bolletjegevuld2");
-		nieuwebolletje.classList.add('bolletjegevuld2');
+	else {
+		previousMovie()
 	}
 }
 
-buttonLinks.addEventListener('click', buttongeklikt);
-buttonRechts.addEventListener('click', buttongeklikt);
+// https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event
+document.addEventListener("keydown", event => {
+	// Pijltje naar rechts -> volgende film
+  if (event.isComposing || event.keyCode === 39) {
+    nextMovie();
+  }
+	// Pijltje naar links -> vorige film
+  else if (event.isComposing || event.keyCode === 37){
+    previousMovie();
+  }
+});
+
+function nextMovie(){
+	var huidigebolletje = document.querySelector("a.bolletjegevuld2");
+	var nieuwebolletje = huidigebolletje.nextElementSibling;
+	if (nieuwebolletje === null) {
+		nieuwebolletje = document.querySelector("a:first-of-type");
+	}
+	goToMovie(nieuwebolletje);
+}
+
+function previousMovie(){
+	var huidigebolletje = document.querySelector("a.bolletjegevuld2");
+	var nieuwebolletje = huidigebolletje.previousElementSibling;
+	if (nieuwebolletje === null) {
+		nieuwebolletje = document.querySelector("a:last-of-type");
+	}
+	goToMovie(nieuwebolletje);
+}
+
+function goToMovie(nieuwBolletje) {
+	/* de class actief wordt van de huidige film gehaald */
+	/* met CSS wordt de film dan kleiner */
+	var huidigeFilm = document.querySelector("li.actief");
+	huidigeFilm.classList.remove("actief");
+
+	/* de class actief aan de nieuwe film toevoegen */
+	/* de id van de nieuwe film bepalen */
+	var nieuweFilmID = nieuwBolletje.hash;
+	var nieuweFilm = document.querySelector(nieuweFilmID);
+	nieuweFilm.classList.add("actief");
+
+	/* de class bolletjegevuld2 wordt van het huidige bolletje gehaald */
+	var huidigeBolletje = document.querySelector("a.bolletjegevuld2");
+	huidigeBolletje.classList.remove("bolletjegevuld2");
+
+	/* de class actief aan het nieuwe bolletje toevoegen */
+	nieuwBolletje.classList.add('bolletjegevuld2');
+
+	/* de link activeren */
+	/* nu begint het verplaatsen */
+	window.location = nieuwBolletje.href;
+}
